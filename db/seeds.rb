@@ -256,6 +256,18 @@ City.create(name: "Laramie", state_id: 51)
 City.create(name: "Gillette", state_id: 51)
 City.create(name: "Rock Springs", state_id: 51)
 
+array =*(1..251)
 
+array.each do |num|
+    5.times do 
+        Event.create(
+            name: "Lorem Ipsum",
+            description: Faker::Lorem.paragraph,
+            shuttle_provided?: false,
+            cost?: false,
+            city_id: num
+            )
+    end
+end
 
 
