@@ -40,5 +40,8 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-
+#gem for generating fake seed data
 gem 'faker'
+
+#gem for validating dates
+gem 'validates_timeliness'
