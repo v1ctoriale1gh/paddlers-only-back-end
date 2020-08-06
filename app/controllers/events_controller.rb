@@ -11,6 +11,7 @@ class EventsController < ApplicationController
         city = City.find(params[:city_id])
         #create the new event
         event = Event.create(event_params(:name, :contact, :address1, :address2, :city_id, :state, :zip, :date, :description))
+        byebug
         #if the even is passes all validations
         if event.valid?
           #order the events and stop showing eventss that are before today
