@@ -19,7 +19,7 @@ class EventsController < ApplicationController
           #send back the json
           render json: events, except: [:created_at, :updated_at]
         else
-          render json: { errors: 'failed to create create event' }, status: :not_acceptable
+          render json: { errors: 'Failed to create create event. Please check that the date is after today and all fields are filled before submitting. Thank you!' }, status: :not_acceptable
         end
     end
 
