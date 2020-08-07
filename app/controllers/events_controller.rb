@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
     def index
+        #this is a nested route - find the city to find the events in the city
         city = City.find(params[:city_id])
         #only display events where the date is after or before today
         events = city.events.where('date >= ?', Date.today).order(:date)
@@ -26,6 +27,7 @@ class EventsController < ApplicationController
 
 private
 
+#strong params so rails permits the events
 def event_params(*args)
     params.require(:event).permit(*args)
 end
