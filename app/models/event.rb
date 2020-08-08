@@ -11,8 +11,12 @@ class Event < ApplicationRecord
   #sets address from form attributes
   def set_address
     #if there is a second address attribute
-    if address2 != nil
+    if address2 != nil 
+      if address2 !=  "" 
       self.address = [address1, address2, city.name, city.state.name, zip].join(', ')
+      else #if there is not a second address attribute
+        self.address = [address1, city.name, city.state.name, zip].join(', ')
+      end
     else #if there is not a second address atrribute
       self.address = [address1, city.name, city.state.name, zip].join(', ')
     end

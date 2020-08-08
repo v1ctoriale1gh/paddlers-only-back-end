@@ -4,7 +4,11 @@ class EventsController < ApplicationController
         city = City.find(params[:city_id])
         #only display events where the date is after or before today
         events = city.events.where('date >= ?', Date.today).order(:date)
-        render json: events, except: [:created_at, :updated_at]
+        if events.length > 0
+          render json: events, except: [:created_at, :updated_at]
+        else
+          render json: { errors: 'Oops! No events have been made yet! Please follow the link to make a new event in the menu bar.'}
+        end
     end
 
     def create
