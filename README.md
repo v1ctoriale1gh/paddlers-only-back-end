@@ -1,7 +1,5 @@
 # README
 
-# README
-
 ## Description
 
 This application is a place for people to post meetups and events for paddling (Kayaking, stand up baddleboard, rafting, and canoes) in the United States.  Navigate through a drop down menu to a state, then city, then event.  Add new events from the menu dropdown on the events page.
