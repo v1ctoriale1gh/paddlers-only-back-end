@@ -1,22 +1,12 @@
 class EventsController < ApplicationController
+  before_action :set_city
+
     def index
-        #this is a nested route - find the city to find the events in the city
-        city = City.find(params[:city_id])
-        #only display events where the date is after or before today
-        events = city.events.where('date >= ?', Date.today).order(:date)
-        if events.length > 0
-          render json: events, except: [:created_at, :updated_at]
-        else
-          render json: { errors: 'Oops! No events have been made yet! Please follow the link to make a new event in the menu bar.'}
-        end
+        render_or_error_for_zero_events
     end
 
     def create
-        #find the city from the params
-        city = City.find(params[:city_id])
-        #create the new event
         event = Event.create(event_params(:name, :contact, :address1, :address2, :city_id, :state, :zip, :date, :description))
-        #byebug
         #if the event passes all validations
         if event.valid?
           #order the events and stop showing eventss that are before today
@@ -29,11 +19,35 @@ class EventsController < ApplicationController
         end
     end
 
+    #back end delete method (front end delete request not done)
+    def destroy
+      city = City.find(params[:city_id])
+      event = Event.find(params[:id])
+      event.destroy
+      render_or_error_for_zero_events
+    end
+
 private
 
 #strong params so rails permits the events
 def event_params(*args)
     params.require(:event).permit(*args)
+end
+
+#set the city
+def set_city
+  city = City.find(params[:city_id])
+end
+
+#method to render or error if no events
+def render_or_error_for_zero_events
+  city = City.find(params[:city_id])
+  events = city.events.where('date >= ?', Date.today).order(:date)
+  if events.length > 0
+    render json: events, except: [:created_at, :updated_at]
+  else
+    render json: { errors: 'Oops! No events have been made yet! Please follow the link to make a new event in the menu bar.'}
+  end
 end
 
 
