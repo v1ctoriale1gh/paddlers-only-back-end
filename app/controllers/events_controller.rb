@@ -9,8 +9,6 @@ class EventsController < ApplicationController
         event = Event.create(event_params(:name, :contact, :address1, :address2, :city_id, :state, :zip, :date, :description))
         #if the event passes all validations
         if event.valid?
-          #order the events and stop showing eventss that are before today
-          events = city.events.where('date >= ?', Date.today).order(:date)
           #send back the json
           render json: events, except: [:created_at, :updated_at]
         # or send back an error message
@@ -19,9 +17,8 @@ class EventsController < ApplicationController
         end
     end
 
-    #back end delete method (front end delete request not done)
+    #backend destroy route (front end delete request not done in eventsAdapter or index.js)
     def destroy
-      city = City.find(params[:city_id])
       event = Event.find(params[:id])
       event.destroy
       render_or_error_for_zero_events
@@ -29,20 +26,23 @@ class EventsController < ApplicationController
 
 private
 
-#strong params so rails permits the events
+#strong params so rails permits the events in create route
 def event_params(*args)
     params.require(:event).permit(*args)
 end
 
-#set the city
+#set the city for dryness
 def set_city
   city = City.find(params[:city_id])
 end
 
 #method to render or error if no events
 def render_or_error_for_zero_events
+  #is this a lexical scoping issue?  city variable lost... must redefine....
   city = City.find(params[:city_id])
-  events = city.events.where('date >= ?', Date.today).order(:date)
+  #get the current events
+  events = city.current_events
+  # if length is greater than zero render, if not send an error
   if events.length > 0
     render json: events, except: [:created_at, :updated_at]
   else
