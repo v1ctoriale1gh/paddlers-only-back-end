@@ -10,6 +10,9 @@ class EventsController < ApplicationController
         #if the event passes all validations
         if event.valid?
           #send back the json
+          #I DONT HAVE TIME TO LOOK AT THIS RIGHT NOW BUT WHY DID THIS CITY VARIABLE GET LOST? ISNT IT SET IN SET CITY?!
+          city = City.find(params[:city_id])
+          events = city.current_events
           render json: events, except: [:created_at, :updated_at]
         # or send back an error message
         else
