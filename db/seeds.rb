@@ -256,38 +256,4 @@ City.create(name: "Laramie", state_id: 51)
 City.create(name: "Gillette", state_id: 51)
 City.create(name: "Rock Springs", state_id: 51)
 
-City.all.each do |city|
-    3.times do 
-        Event.create(
-            name: "Lorem Ipsum",
-            description: Faker::Lorem.paragraph,
-            shuttle_provided?: false,
-            cost?: false,
-            address1: Faker::Address.street_address,
-            contact: "Test Contact - Test@example.com",
-            zip: "00000",
-            date: Faker::Date.between(from: Date.today, to: Date.today + 365), 
-            city_id: city.id,
-            state: city.state.name
-            )
-    end
-end
-
-City.all.each do |city|
-    3.times do 
-        Event.create(
-            name: "Lorem Ipsum",
-            description: Faker::Lorem.paragraph,
-            shuttle_provided?: true,
-            cost?: true,
-            address1: Faker::Address.street_address,
-            contact: "Test Contact - Test@example.com",
-            zip: "00000",
-            date: Faker::Date.between(from: Date.today, to: Date.today + 365), 
-            city_id: city.id,
-            state: city.state.name
-            )
-    end
-end
-
 
